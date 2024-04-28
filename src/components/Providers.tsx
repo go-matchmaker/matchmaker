@@ -1,5 +1,5 @@
 "use client";
-import { theme } from "@/utils/constants";
+import { theme } from "@/utils/theme";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 

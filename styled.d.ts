@@ -7,5 +7,11 @@ declare module "styled-components" {
       white: string;
       menuGrey: string;
     };
+    breakpoints: {
+      mobile: string;
+      tablet: string;
+      laptop: string;
+      laptopL: string;
+    };
   }
 }
