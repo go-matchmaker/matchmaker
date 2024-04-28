@@ -1,8 +1,12 @@
 "use client";
+import withMenuWrapper from "@/components/hoc/withMenuWrapper";
+import TopBar from "@/components/menus/TopBar";
 import styled from "styled-components";
 
 const Main = styled.main``;
 
-export default function Home() {
+const Home = () => {
   return <Main></Main>;
-}
+};
+
+export default withMenuWrapper(Home, "home");
