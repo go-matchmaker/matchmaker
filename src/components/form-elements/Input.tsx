@@ -51,6 +51,7 @@ interface Props {
   required?: boolean;
   placeholder?: string;
   LeftIcon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  type?: React.HTMLInputTypeAttribute;
 }
 
 const Input: FC<Props> = ({
@@ -60,6 +61,7 @@ const Input: FC<Props> = ({
   required,
   placeholder,
   LeftIcon,
+  type,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -77,6 +79,7 @@ const Input: FC<Props> = ({
         <InputField
           placeholder={placeholder}
           onFocus={() => setIsFocused(true)}
+          type={type}
           {...register(name, { required, onBlur: () => setIsFocused(false) })}
         />
       </InputFieldContainer>

@@ -66,7 +66,11 @@ const ProgressBarLabel = styled.label<{ activeStep: RegisterSteps }>`
   color: white;
 `;
 
-const Form = styled.form``;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 const NextButton = styled.button``;
 const PreviousButton = styled.button``;
@@ -105,9 +109,34 @@ const Register = () => {
             register={register}
             formState={formState}
             name="name"
-            required={true}
+            required
             LeftIcon={UserIcon}
             placeholder="Name"
+          />
+          <Input
+            register={register}
+            formState={formState}
+            name="surname"
+            required
+            LeftIcon={UserIcon}
+            placeholder="Surname"
+          />
+          <Input
+            register={register}
+            formState={formState}
+            name="email"
+            required
+            LeftIcon={UserIcon}
+            placeholder="E-Mail"
+          />
+          <Input
+            register={register}
+            formState={formState}
+            name="phone"
+            required
+            LeftIcon={UserIcon}
+            placeholder="Phone"
+            type="number"
           />
           <PreviousButton
             type="button"
