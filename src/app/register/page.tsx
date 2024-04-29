@@ -1,7 +1,10 @@
 "use client";
+import Input from "@/components/form-elements/Input";
+import UserIcon from "@/components/icons/UserIcon";
 import { RegisterSteps } from "@/utils/enums";
 import { getRegisterProgressBarLabelWidth } from "@/utils/helpers";
 import React, { useMemo, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -15,10 +18,10 @@ const Container = styled.div`
 const CenterContainer = styled.div`
   width: 35%;
   height: 80%;
-  border: 1px solid ${(props) => props.theme.colors.menuGrey};
+  border: 1px solid ${(props) => props.theme.colors.mainGrey};
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0px 0px 20px ${(props) => props.theme.colors.menuGrey};
+  box-shadow: 0px 0px 20px ${(props) => props.theme.colors.mainGrey};
   transition: height 1s, width 1s;
 
   ${(props) => props.theme.breakpoints.laptopL} {
@@ -40,7 +43,7 @@ const ProgressBarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${(props) => props.theme.colors.menuGrey};
+  background-color: ${(props) => props.theme.colors.mainGrey};
   width: 100%;
   height: 4em;
   border-radius: 2em;
@@ -56,30 +59,40 @@ const ProgressBarLabel = styled.label<{ activeStep: RegisterSteps }>`
   width: ${({ activeStep }) => getRegisterProgressBarLabelWidth(activeStep)};
   height: 100%;
   letter-spacing: 1px;
-  background-color: red;
+  background-color: ${(props) => props.theme.colors.mainGreen};
   border-radius: 2em;
   padding: 0em 2em;
   transition: width 1s;
+  color: white;
 `;
+
+const Form = styled.form``;
 
 const NextButton = styled.button``;
 const PreviousButton = styled.button``;
 
 const Register = () => {
+  const { register, handleSubmit, watch, formState } = useForm();
+
   const [activeStep, setActiveStep] = useState(RegisterSteps.PersonalInfo);
+  const [nextButtonType, setNextButtonType] = useState<
+    "submit" | "reset" | "button" | undefined
+  >("button");
 
   const label = useMemo(() => {
     switch (activeStep) {
       case RegisterSteps.PersonalInfo:
-        return `Personal\nInformation`;
+        return `PERSONAL\nINFORMATION`;
       case RegisterSteps.CompanyInfo:
-        return `Company\nInformation`;
+        return `COMPANY\nINFORMATION`;
       case RegisterSteps.AccountInfo:
-        return `Account\nInformation`;
+        return `ACCOUNT\nINFORMATION`;
       default:
         break;
     }
   }, [activeStep]);
+
+  const onSubmit: SubmitHandler<any> = (data) => console.log(data);
 
   return (
     <Container>
@@ -87,8 +100,17 @@ const Register = () => {
         <ProgressBarContainer>
           <ProgressBarLabel activeStep={activeStep}>{label}</ProgressBarLabel>
         </ProgressBarContainer>
-        <div style={{ marginTop: "5em" }}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            register={register}
+            formState={formState}
+            name="name"
+            required={true}
+            LeftIcon={UserIcon}
+            placeholder="Name"
+          />
           <PreviousButton
+            type="button"
             onClick={() => {
               setActiveStep((prev) => {
                 if (prev === RegisterSteps.CompanyInfo) {
@@ -104,7 +126,12 @@ const Register = () => {
             Previous
           </PreviousButton>
           <NextButton
+            type={nextButtonType}
             onClick={() => {
+              if (activeStep === RegisterSteps.AccountInfo) {
+                setNextButtonType("submit");
+                return;
+              }
               setActiveStep((prev) => {
                 if (prev === RegisterSteps.PersonalInfo) {
                   return RegisterSteps.CompanyInfo;
@@ -118,7 +145,7 @@ const Register = () => {
           >
             Next
           </NextButton>
-        </div>
+        </Form>
       </CenterContainer>
     </Container>
   );

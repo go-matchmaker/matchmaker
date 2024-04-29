@@ -8,7 +8,7 @@ const Container = styled.div`
   left: 0px;
   right: 0px;
   height: 100px;
-  box-shadow: 0px 0px 10px ${(props) => props.theme.colors.menuGrey};
+  box-shadow: 0px 0px 10px ${(props) => props.theme.colors.mainGrey};
 `;
 
 const Button = styled.button``;
