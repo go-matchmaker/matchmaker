@@ -1,4 +1,5 @@
 import { RegisterSteps } from "./enums";
+import { theme } from "./theme";
 
 export const getRegisterProgressBarLabelWidth = (
   activeStep: RegisterSteps
@@ -13,4 +14,20 @@ export const getRegisterProgressBarLabelWidth = (
     default:
       return "33.33%";
   }
+};
+
+export const formInputErrorStyle = (isFocused: boolean, isError: boolean) => {
+  if (isError) {
+    return { border: "1px solid red", color: "red" };
+  }
+  if (isFocused) {
+    return {
+      border: `1px solid ${theme.colors.mainGreen}`,
+      color: theme.colors.mainGreen,
+    };
+  }
+  return {
+    border: `1px solid ${theme.colors.mainGrey}`,
+    color: theme.colors.mainGrey,
+  };
 };

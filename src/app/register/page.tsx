@@ -76,13 +76,8 @@ const NextButton = styled.button``;
 const PreviousButton = styled.button``;
 
 const Register = () => {
-  const { register, handleSubmit, watch, formState } = useForm();
-
+  const { register, handleSubmit, formState } = useForm();
   const [activeStep, setActiveStep] = useState(RegisterSteps.PersonalInfo);
-  const [nextButtonType, setNextButtonType] = useState<
-    "submit" | "reset" | "button" | undefined
-  >("button");
-
   const label = useMemo(() => {
     switch (activeStep) {
       case RegisterSteps.PersonalInfo:
@@ -95,8 +90,17 @@ const Register = () => {
         break;
     }
   }, [activeStep]);
-
-  const onSubmit: SubmitHandler<any> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<any> = (data) => {
+    setActiveStep((prev) => {
+      if (prev === RegisterSteps.PersonalInfo) {
+        return RegisterSteps.CompanyInfo;
+      } else if (prev === RegisterSteps.CompanyInfo) {
+        return RegisterSteps.AccountInfo;
+      } else {
+        return prev;
+      }
+    });
+  };
 
   return (
     <Container>
@@ -109,34 +113,42 @@ const Register = () => {
             register={register}
             formState={formState}
             name="name"
-            required
             LeftIcon={UserIcon}
             placeholder="Name"
+            required="The name field is required."
           />
           <Input
             register={register}
             formState={formState}
             name="surname"
-            required
             LeftIcon={UserIcon}
             placeholder="Surname"
+            required="The surname field is required."
           />
           <Input
             register={register}
             formState={formState}
             name="email"
-            required
             LeftIcon={UserIcon}
             placeholder="E-Mail"
+            required="The e-mail field is required."
+            validate={(fieldValue) => {
+              const emailCheckRegex = /\S+@\S+\.\S+/;
+              const isValid = emailCheckRegex.test(fieldValue);
+              if (!isValid) {
+                return "Please enter a valid e-mail address.";
+              }
+              return true;
+            }}
           />
           <Input
             register={register}
             formState={formState}
-            name="phone"
-            required
+            name="phone_number"
             LeftIcon={UserIcon}
-            placeholder="Phone"
+            placeholder="Phone number"
             type="number"
+            required="The phone number field is required."
           />
           <PreviousButton
             type="button"
@@ -154,26 +166,7 @@ const Register = () => {
           >
             Previous
           </PreviousButton>
-          <NextButton
-            type={nextButtonType}
-            onClick={() => {
-              if (activeStep === RegisterSteps.AccountInfo) {
-                setNextButtonType("submit");
-                return;
-              }
-              setActiveStep((prev) => {
-                if (prev === RegisterSteps.PersonalInfo) {
-                  return RegisterSteps.CompanyInfo;
-                } else if (prev === RegisterSteps.CompanyInfo) {
-                  return RegisterSteps.AccountInfo;
-                } else {
-                  return prev;
-                }
-              });
-            }}
-          >
-            Next
-          </NextButton>
+          <NextButton type={"submit"}>Next</NextButton>
         </Form>
       </CenterContainer>
     </Container>
