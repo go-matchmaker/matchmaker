@@ -70,6 +70,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow: hidden;
 `;
 
 const NextButton = styled.button``;
@@ -100,6 +101,12 @@ const Register = () => {
         return prev;
       }
     });
+    if (
+      activeStep === RegisterSteps.PersonalInfo ||
+      activeStep === RegisterSteps.CompanyInfo
+    ) {
+      return;
+    }
   };
 
   return (

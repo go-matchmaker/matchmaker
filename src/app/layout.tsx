@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "styled-components";
 import Providers from "@/components/Providers";
+import StyledComponentRegistry from "@/components/lib/StyledComponentRegistry";
 
 export const metadata: Metadata = {
   title: "Matchmaker",
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <StyledComponentRegistry>
+          <Providers>{children}</Providers>
+        </StyledComponentRegistry>
       </body>
     </html>
   );
