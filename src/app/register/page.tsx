@@ -2,7 +2,15 @@
 import Input from "@/components/form-elements/Input";
 import UserIcon from "@/components/icons/UserIcon";
 import { RegisterSteps } from "@/utils/enums";
-import { getRegisterProgressBarLabelWidth } from "@/utils/helpers";
+import {
+  getRegisterProgressBarLabelWidth,
+  registerPageFormStep,
+  registerPageRequiredText,
+} from "@/utils/helpers";
+import {
+  registerPageConfirmPasswordValidation,
+  registerPageEmailValidation,
+} from "@/utils/validations";
 import React, { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -67,6 +75,7 @@ const ProgressBarLabel = styled.label<{ activeStep: RegisterSteps }>`
 `;
 
 const Form = styled.form`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -76,8 +85,39 @@ const Form = styled.form`
 const NextButton = styled.button``;
 const PreviousButton = styled.button``;
 
+const InputContainer = styled.div<{ activeStep: RegisterSteps }>`
+  display: flex;
+  transform: ${({ activeStep }) => registerPageFormStep(activeStep)};
+  transition: transform 500ms;
+`;
+
+const PersonalInformationTab = styled.div`
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
+const CompanyInformationTab = styled.div`
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
+const AccountInformationTab = styled.div`
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
+
 const Register = () => {
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, clearErrors } = useForm();
   const [activeStep, setActiveStep] = useState(RegisterSteps.PersonalInfo);
   const label = useMemo(() => {
     switch (activeStep) {
@@ -101,12 +141,11 @@ const Register = () => {
         return prev;
       }
     });
-    if (
-      activeStep === RegisterSteps.PersonalInfo ||
-      activeStep === RegisterSteps.CompanyInfo
-    ) {
+    if (activeStep !== RegisterSteps.AccountInfo) {
       return;
     }
+
+    console.log("istek atti");
   };
 
   return (
@@ -116,47 +155,80 @@ const Register = () => {
           <ProgressBarLabel activeStep={activeStep}>{label}</ProgressBarLabel>
         </ProgressBarContainer>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            register={register}
-            formState={formState}
-            name="name"
-            LeftIcon={UserIcon}
-            placeholder="Name"
-            required="The name field is required."
-          />
-          <Input
-            register={register}
-            formState={formState}
-            name="surname"
-            LeftIcon={UserIcon}
-            placeholder="Surname"
-            required="The surname field is required."
-          />
-          <Input
-            register={register}
-            formState={formState}
-            name="email"
-            LeftIcon={UserIcon}
-            placeholder="E-Mail"
-            required="The e-mail field is required."
-            validate={(fieldValue) => {
-              const emailCheckRegex = /\S+@\S+\.\S+/;
-              const isValid = emailCheckRegex.test(fieldValue);
-              if (!isValid) {
-                return "Please enter a valid e-mail address.";
-              }
-              return true;
-            }}
-          />
-          <Input
-            register={register}
-            formState={formState}
-            name="phone_number"
-            LeftIcon={UserIcon}
-            placeholder="Phone number"
-            type="number"
-            required="The phone number field is required."
-          />
+          <InputContainer activeStep={activeStep}>
+            <PersonalInformationTab>
+              <Input
+                register={register}
+                formState={formState}
+                name="name"
+                LeftIcon={UserIcon}
+                placeholder="Name"
+                required={registerPageRequiredText(activeStep).name}
+              />
+              <Input
+                register={register}
+                formState={formState}
+                name="surname"
+                LeftIcon={UserIcon}
+                placeholder="Surname"
+                required={registerPageRequiredText(activeStep).surname}
+              />
+              <Input
+                register={register}
+                formState={formState}
+                name="email"
+                LeftIcon={UserIcon}
+                placeholder="E-Mail"
+                required={registerPageRequiredText(activeStep).email}
+                validate={(fieldValue) =>
+                  registerPageEmailValidation(fieldValue, activeStep)
+                }
+              />
+              <Input
+                register={register}
+                formState={formState}
+                name="phone_number"
+                LeftIcon={UserIcon}
+                placeholder="Phone number"
+                type="number"
+                required={registerPageRequiredText(activeStep).phoneNumber}
+              />
+            </PersonalInformationTab>
+            <CompanyInformationTab>
+              <Input
+                register={register}
+                formState={formState}
+                name="test"
+                LeftIcon={UserIcon}
+                placeholder="test"
+              />
+            </CompanyInformationTab>
+            <AccountInformationTab>
+              <Input
+                register={register}
+                formState={formState}
+                name="password"
+                LeftIcon={UserIcon}
+                placeholder="Password"
+                required={registerPageRequiredText(activeStep).password}
+              />
+              <Input
+                register={register}
+                formState={formState}
+                name="confirmPassword"
+                LeftIcon={UserIcon}
+                placeholder="confirmPassword"
+                required={registerPageRequiredText(activeStep).confirmPassword}
+                validate={(fieldValue, formValues) =>
+                  registerPageConfirmPasswordValidation(
+                    formValues?.password,
+                    fieldValue,
+                    activeStep
+                  )
+                }
+              />
+            </AccountInformationTab>
+          </InputContainer>
           <PreviousButton
             type="button"
             onClick={() => {

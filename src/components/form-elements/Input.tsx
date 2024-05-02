@@ -13,6 +13,7 @@ import { formInputErrorStyle } from "@/utils/helpers";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const InputFieldContainer = styled.div<{
@@ -28,7 +29,11 @@ const InputFieldContainer = styled.div<{
   border-radius: 20px;
   padding: 6px 12px;
   gap: 10px;
-  transition: border 500ms;
+  transition: border 500ms, background-color 500ms;
+
+  &:hover {
+    background-color: ${theme.colors.lightGrey};
+  }
 `;
 
 const InputField = styled.input`
@@ -38,6 +43,7 @@ const InputField = styled.input`
   border: none;
   font-size: 16px;
   color: ${theme.colors.darkGrey};
+  background-color: transparent;
   &::placeholder {
     color: ${theme.colors.mainGrey};
   }

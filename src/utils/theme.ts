@@ -2,9 +2,10 @@ export const theme = {
   colors: {
     darkGreen: "#007000",
     white: "#FFFFFF",
-    mainGrey: "#b2b2b2",
     mainGreen: "#00b300",
+    mainGrey: "#b2b2b2",
     darkGrey: "#494949",
+    lightGrey: "#efefef",
   },
   breakpoints: {
     mobile: "@media (max-width: 425px)",
