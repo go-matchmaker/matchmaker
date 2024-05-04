@@ -19,6 +19,7 @@ const Container = styled.div`
 const InputFieldContainer = styled.div<{
   isFocused: boolean;
   isError: boolean;
+  isDisabled: boolean | undefined;
 }>`
   display: flex;
   width: 100%;
@@ -29,10 +30,12 @@ const InputFieldContainer = styled.div<{
   border-radius: 20px;
   padding: 6px 12px;
   gap: 10px;
+  opacity: ${({ isDisabled }) => isDisabled && "0.7"};
   transition: border 500ms, background-color 500ms;
 
   &:hover {
-    background-color: ${theme.colors.lightGrey};
+    background-color: ${({ isDisabled }) =>
+      !isDisabled && theme.colors.lightGrey};
   }
 `;
 
@@ -71,6 +74,7 @@ interface Props {
     | Validate<any, FieldValues>
     | Record<string, Validate<any, FieldValues>>
     | undefined;
+  disabled?: boolean;
 }
 
 const Input: FC<Props> = ({
@@ -82,13 +86,18 @@ const Input: FC<Props> = ({
   LeftIcon,
   type,
   validate,
+  disabled,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const isError = Boolean(formState.errors?.[name]);
 
   return (
     <Container>
-      <InputFieldContainer isFocused={isFocused} isError={isError}>
+      <InputFieldContainer
+        isFocused={isFocused}
+        isError={isError}
+        isDisabled={disabled}
+      >
         {LeftIcon && (
           <LeftIcon
             width={20}
@@ -105,6 +114,7 @@ const Input: FC<Props> = ({
             required,
             onBlur: () => setIsFocused(false),
             validate,
+            disabled,
           })}
         />
       </InputFieldContainer>

@@ -43,7 +43,10 @@ export const registerPageFormStep = (activeStep: RegisterSteps) => {
   return "translateX(0%)";
 };
 
-export const registerPageRequiredText = (activeStep: RegisterSteps) => {
+export const registerPageRequiredText = (
+  activeStep: RegisterSteps,
+  companyValue?: number
+) => {
   const requiredText = "The name field is required.";
   switch (activeStep) {
     case RegisterSteps.PersonalInfo:
@@ -54,6 +57,7 @@ export const registerPageRequiredText = (activeStep: RegisterSteps) => {
         phoneNumber: requiredText,
         password: undefined,
         confirmPassword: undefined,
+        job_title: undefined,
       };
     case RegisterSteps.CompanyInfo:
       return {
@@ -63,6 +67,7 @@ export const registerPageRequiredText = (activeStep: RegisterSteps) => {
         phoneNumber: undefined,
         password: undefined,
         confirmPassword: undefined,
+        job_title: companyValue ? requiredText : undefined,
       };
     case RegisterSteps.AccountInfo:
       return {
@@ -72,6 +77,7 @@ export const registerPageRequiredText = (activeStep: RegisterSteps) => {
         phoneNumber: undefined,
         password: requiredText,
         confirmPassword: requiredText,
+        job_title: undefined,
       };
     default:
       return {};

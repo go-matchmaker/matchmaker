@@ -118,7 +118,7 @@ const AccountInformationTab = styled.div`
 `;
 
 const Register = () => {
-  const { register, handleSubmit, formState, control } = useForm();
+  const { register, handleSubmit, formState, control, watch } = useForm();
   const [activeStep, setActiveStep] = useState(RegisterSteps.PersonalInfo);
   const label = useMemo(() => {
     switch (activeStep) {
@@ -201,6 +201,18 @@ const Register = () => {
                 control={control}
                 placeholder="Company"
                 LeftIcon={UserIcon}
+              />
+              <Input
+                register={register}
+                formState={formState}
+                name="job_title"
+                LeftIcon={UserIcon}
+                placeholder="Job title"
+                disabled={!watch("company")}
+                required={
+                  registerPageRequiredText(activeStep, watch("company")?.value)
+                    .job_title
+                }
               />
             </CompanyInformationTab>
             <AccountInformationTab>
