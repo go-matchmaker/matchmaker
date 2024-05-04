@@ -1,5 +1,6 @@
 "use client";
 import Input from "@/components/form-elements/Input";
+import Select from "@/components/form-elements/Select";
 import UserIcon from "@/components/icons/UserIcon";
 import { RegisterSteps } from "@/utils/enums";
 import {
@@ -117,7 +118,7 @@ const AccountInformationTab = styled.div`
 `;
 
 const Register = () => {
-  const { register, handleSubmit, formState, clearErrors } = useForm();
+  const { register, handleSubmit, formState, control } = useForm();
   const [activeStep, setActiveStep] = useState(RegisterSteps.PersonalInfo);
   const label = useMemo(() => {
     switch (activeStep) {
@@ -195,12 +196,11 @@ const Register = () => {
               />
             </PersonalInformationTab>
             <CompanyInformationTab>
-              <Input
-                register={register}
-                formState={formState}
-                name="test"
+              <Select
+                name="company"
+                control={control}
+                placeholder="Company"
                 LeftIcon={UserIcon}
-                placeholder="test"
               />
             </CompanyInformationTab>
             <AccountInformationTab>
