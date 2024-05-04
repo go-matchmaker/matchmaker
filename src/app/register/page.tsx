@@ -1,6 +1,5 @@
 "use client";
 import Input from "@/components/form-elements/Input";
-import Select from "@/components/form-elements/Select";
 import UserIcon from "@/components/icons/UserIcon";
 import { RegisterSteps } from "@/utils/enums";
 import {
@@ -34,13 +33,13 @@ const CenterContainer = styled.div`
   transition: height 1s, width 1s;
 
   ${(props) => props.theme.breakpoints.laptopL} {
-    width: 40%;
+    width: 50%;
   }
   ${(props) => props.theme.breakpoints.laptop} {
     width: 50%;
   }
   ${(props) => props.theme.breakpoints.tablet} {
-    width: 70%;
+    width: 85%;
   }
   ${(props) => props.theme.breakpoints.mobile} {
     width: 90%;
@@ -54,9 +53,10 @@ const ProgressBarContainer = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.colors.mainGrey};
   width: 100%;
-  height: 4em;
+  height: 50px;
   border-radius: 2em;
   user-select: none;
+  margin: 24px 0px;
 `;
 
 const ProgressBarLabel = styled.label<{ activeStep: RegisterSteps }>`
@@ -73,6 +73,18 @@ const ProgressBarLabel = styled.label<{ activeStep: RegisterSteps }>`
   padding: 0em 2em;
   transition: width 1s;
   color: white;
+  font-size: 0.8vw;
+  transition: font-size 500ms, width 500ms;
+
+  ${(props) => props.theme.breakpoints.laptopL} {
+    font-size: 0.9vw;
+  }
+  ${(props) => props.theme.breakpoints.laptop} {
+    font-size: 1.3vw;
+  }
+  ${(props) => props.theme.breakpoints.tablet} {
+    font-size: 1.8vw;
+  }
 `;
 
 const Form = styled.form`
@@ -100,14 +112,7 @@ const PersonalInformationTab = styled.div`
   align-items: center;
   gap: 20px;
 `;
-const CompanyInformationTab = styled.div`
-  min-width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-`;
+
 const AccountInformationTab = styled.div`
   min-width: 100%;
   display: flex;
@@ -117,26 +122,45 @@ const AccountInformationTab = styled.div`
   gap: 20px;
 `;
 
+const TopTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+`;
+
+const RegısterLabel = styled.label`
+  font-size: 2vw;
+  font-weight: bold;
+  letter-spacing: 8px;
+`;
+const WelcomeLabel = styled.label`
+  font-size: 1.5vw;
+  font-weight: 500;
+  letter-spacing: 4px;
+`;
+const DescrıptıonLabel = styled.label`
+  font-size: 1vw;
+  font-weight: 500;
+  letter-spacing: 1px;
+`;
+
 const Register = () => {
   const { register, handleSubmit, formState, control, watch } = useForm();
   const [activeStep, setActiveStep] = useState(RegisterSteps.PersonalInfo);
   const label = useMemo(() => {
-    switch (activeStep) {
-      case RegisterSteps.PersonalInfo:
-        return `PERSONAL\nINFORMATION`;
-      case RegisterSteps.CompanyInfo:
-        return `COMPANY\nINFORMATION`;
-      case RegisterSteps.AccountInfo:
-        return `ACCOUNT\nINFORMATION`;
-      default:
-        break;
+    if (activeStep === RegisterSteps.PersonalInfo) {
+      return `PERSONAL\nINFORMATION`;
+    } else {
+      return `ACCOUNT\nINFORMATION`;
     }
   }, [activeStep]);
   const onSubmit: SubmitHandler<any> = (data) => {
+    delete data?.confirm_password;
     setActiveStep((prev) => {
       if (prev === RegisterSteps.PersonalInfo) {
-        return RegisterSteps.CompanyInfo;
-      } else if (prev === RegisterSteps.CompanyInfo) {
         return RegisterSteps.AccountInfo;
       } else {
         return prev;
@@ -152,6 +176,13 @@ const Register = () => {
   return (
     <Container>
       <CenterContainer>
+        <TopTextContainer>
+          <RegısterLabel>REGISTER</RegısterLabel>
+          <WelcomeLabel>WELCOME</WelcomeLabel>
+          <DescrıptıonLabel>
+            Please fill in the information below step by step.
+          </DescrıptıonLabel>
+        </TopTextContainer>
         <ProgressBarContainer>
           <ProgressBarLabel activeStep={activeStep}>{label}</ProgressBarLabel>
         </ProgressBarContainer>
@@ -195,26 +226,6 @@ const Register = () => {
                 required={registerPageRequiredText(activeStep).phoneNumber}
               />
             </PersonalInformationTab>
-            <CompanyInformationTab>
-              <Select
-                name="company"
-                control={control}
-                placeholder="Company"
-                LeftIcon={UserIcon}
-              />
-              <Input
-                register={register}
-                formState={formState}
-                name="job_title"
-                LeftIcon={UserIcon}
-                placeholder="Job title"
-                disabled={!watch("company")}
-                required={
-                  registerPageRequiredText(activeStep, watch("company")?.value)
-                    .job_title
-                }
-              />
-            </CompanyInformationTab>
             <AccountInformationTab>
               <Input
                 register={register}
@@ -227,7 +238,7 @@ const Register = () => {
               <Input
                 register={register}
                 formState={formState}
-                name="confirmPassword"
+                name="confirm_password"
                 LeftIcon={UserIcon}
                 placeholder="confirmPassword"
                 required={registerPageRequiredText(activeStep).confirmPassword}
@@ -245,10 +256,8 @@ const Register = () => {
             type="button"
             onClick={() => {
               setActiveStep((prev) => {
-                if (prev === RegisterSteps.CompanyInfo) {
+                if (prev === RegisterSteps.AccountInfo) {
                   return RegisterSteps.PersonalInfo;
-                } else if (prev === RegisterSteps.AccountInfo) {
-                  return RegisterSteps.CompanyInfo;
                 } else {
                   return prev;
                 }

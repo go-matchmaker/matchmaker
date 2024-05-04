@@ -4,15 +4,10 @@ import { theme } from "./theme";
 export const getRegisterProgressBarLabelWidth = (
   activeStep: RegisterSteps
 ): string => {
-  switch (activeStep) {
-    case RegisterSteps.PersonalInfo:
-      return "33.33%";
-    case RegisterSteps.CompanyInfo:
-      return "66.66%";
-    case RegisterSteps.AccountInfo:
-      return "100%";
-    default:
-      return "33.33%";
+  if (activeStep === RegisterSteps.PersonalInfo) {
+    return "50%";
+  } else {
+    return "100%";
   }
 };
 
@@ -35,12 +30,9 @@ export const formInputErrorStyle = (isFocused: boolean, isError: boolean) => {
 export const registerPageFormStep = (activeStep: RegisterSteps) => {
   if (activeStep === RegisterSteps.PersonalInfo) {
     return "translateX(0%)";
-  } else if (activeStep === RegisterSteps.CompanyInfo) {
+  } else {
     return "translateX(-100%)";
-  } else if (activeStep === RegisterSteps.AccountInfo) {
-    return "translateX(-200%)";
   }
-  return "translateX(0%)";
 };
 
 export const registerPageRequiredText = (
@@ -48,38 +40,26 @@ export const registerPageRequiredText = (
   companyValue?: number
 ) => {
   const requiredText = "The name field is required.";
-  switch (activeStep) {
-    case RegisterSteps.PersonalInfo:
-      return {
-        name: requiredText,
-        surname: requiredText,
-        email: requiredText,
-        phoneNumber: requiredText,
-        password: undefined,
-        confirmPassword: undefined,
-        job_title: undefined,
-      };
-    case RegisterSteps.CompanyInfo:
-      return {
-        name: undefined,
-        surname: undefined,
-        email: undefined,
-        phoneNumber: undefined,
-        password: undefined,
-        confirmPassword: undefined,
-        job_title: companyValue ? requiredText : undefined,
-      };
-    case RegisterSteps.AccountInfo:
-      return {
-        name: undefined,
-        surname: undefined,
-        email: undefined,
-        phoneNumber: undefined,
-        password: requiredText,
-        confirmPassword: requiredText,
-        job_title: undefined,
-      };
-    default:
-      return {};
+
+  if (activeStep === RegisterSteps.PersonalInfo) {
+    return {
+      name: requiredText,
+      surname: requiredText,
+      email: requiredText,
+      phoneNumber: requiredText,
+      password: undefined,
+      confirmPassword: undefined,
+      job_title: undefined,
+    };
+  } else {
+    return {
+      name: undefined,
+      surname: undefined,
+      email: undefined,
+      phoneNumber: undefined,
+      password: requiredText,
+      confirmPassword: requiredText,
+      job_title: undefined,
+    };
   }
 };

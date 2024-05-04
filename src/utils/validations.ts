@@ -6,7 +6,7 @@ export const registerPageEmailValidation = (
 ) => {
   const emailCheckRegex = /\S+@\S+\.\S+/;
   const isValid = emailCheckRegex.test(email);
-  if (!isValid && activeStep === RegisterSteps.AccountInfo) {
+  if (!isValid && activeStep === RegisterSteps.PersonalInfo) {
     return "Please enter a valid e-mail address.";
   }
   return true;
