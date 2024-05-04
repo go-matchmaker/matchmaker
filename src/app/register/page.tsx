@@ -152,9 +152,9 @@ const Register = () => {
   const [activeStep, setActiveStep] = useState(RegisterSteps.PersonalInfo);
   const label = useMemo(() => {
     if (activeStep === RegisterSteps.PersonalInfo) {
-      return `PERSONAL\nINFORMATION`;
+      return `PERSONAL INFORMATION`;
     } else {
-      return `ACCOUNT\nINFORMATION`;
+      return `ACCOUNT INFORMATION`;
     }
   }, [activeStep]);
   const onSubmit: SubmitHandler<any> = (data) => {
