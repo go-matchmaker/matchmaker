@@ -252,21 +252,26 @@ const Register = () => {
               />
             </AccountInformationTab>
           </InputContainer>
-          <PreviousButton
-            type="button"
-            onClick={() => {
-              setActiveStep((prev) => {
-                if (prev === RegisterSteps.AccountInfo) {
-                  return RegisterSteps.PersonalInfo;
-                } else {
-                  return prev;
-                }
-              });
-            }}
-          >
-            Previous
-          </PreviousButton>
-          <NextButton type={"submit"}>Next</NextButton>
+          {activeStep === RegisterSteps.AccountInfo && (
+            <PreviousButton
+              type="button"
+              onClick={() => {
+                setActiveStep((prev) => {
+                  if (prev === RegisterSteps.AccountInfo) {
+                    return RegisterSteps.PersonalInfo;
+                  } else {
+                    return prev;
+                  }
+                });
+              }}
+            >
+              Previous
+            </PreviousButton>
+          )}
+
+          <NextButton type={"submit"}>
+            {activeStep === RegisterSteps.PersonalInfo ? "Next" : "Register"}
+          </NextButton>
         </Form>
       </CenterContainer>
     </Container>
