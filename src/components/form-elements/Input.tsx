@@ -17,25 +17,25 @@ const Container = styled.div`
 `;
 
 const InputFieldContainer = styled.div<{
-  isFocused: boolean;
-  isError: boolean;
-  isDisabled: boolean | undefined;
+  $isfocused: boolean;
+  $iserror: boolean;
+  $isdisabled: boolean | undefined;
 }>`
   display: flex;
   width: 100%;
   height: 50px;
   align-items: center;
-  border: ${({ isFocused, isError }) =>
-    formInputErrorStyle(isFocused, isError)?.border};
+  border: ${({ $isfocused, $iserror }) =>
+    formInputErrorStyle($isfocused, $iserror)?.border};
   border-radius: 20px;
   padding: 6px 12px;
   gap: 10px;
-  opacity: ${({ isDisabled }) => isDisabled && "0.7"};
+  opacity: ${({ $isdisabled }) => $isdisabled && "0.7"};
   transition: border 500ms, background-color 500ms;
 
   &:hover {
-    background-color: ${({ isDisabled }) =>
-      !isDisabled && theme.colors.lightGrey};
+    background-color: ${({ $isdisabled }) =>
+      !$isdisabled && theme.colors.lightGrey};
   }
 `;
 
@@ -52,10 +52,10 @@ const InputField = styled.input`
   }
 `;
 const ErrorText = styled.span<{
-  isError: boolean;
+  $iserror: boolean;
 }>`
   font-size: 12px;
-  height: ${({ isError }) => (isError ? "14px" : "0px")};
+  height: ${({ $iserror }) => ($iserror ? "14px" : "0px")};
   color: red;
   overflow: hidden;
   font-weight: 500;
@@ -94,9 +94,9 @@ const Input: FC<Props> = ({
   return (
     <Container>
       <InputFieldContainer
-        isFocused={isFocused}
-        isError={isError}
-        isDisabled={disabled}
+        $isfocused={isFocused}
+        $iserror={isError}
+        $isdisabled={disabled}
       >
         {LeftIcon && (
           <LeftIcon
@@ -118,7 +118,7 @@ const Input: FC<Props> = ({
           })}
         />
       </InputFieldContainer>
-      <ErrorText isError={isError}>
+      <ErrorText $iserror={isError}>
         {formState?.errors?.[name]?.message?.toString()}
       </ErrorText>
     </Container>

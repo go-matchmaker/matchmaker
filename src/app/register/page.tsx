@@ -59,13 +59,13 @@ const ProgressBarContainer = styled.div`
   margin: 24px 0px;
 `;
 
-const ProgressBarLabel = styled.label<{ activeStep: RegisterSteps }>`
+const ProgressBarLabel = styled.label<{ $activestep: RegisterSteps }>`
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   white-space: pre-line;
-  width: ${({ activeStep }) => getRegisterProgressBarLabelWidth(activeStep)};
+  width: ${({ $activestep }) => getRegisterProgressBarLabelWidth($activestep)};
   height: 100%;
   letter-spacing: 1px;
   background-color: ${(props) => props.theme.colors.mainGreen};
@@ -98,9 +98,9 @@ const Form = styled.form`
 const NextButton = styled.button``;
 const PreviousButton = styled.button``;
 
-const InputContainer = styled.div<{ activeStep: RegisterSteps }>`
+const InputContainer = styled.div<{ $activestep: RegisterSteps }>`
   display: flex;
-  transform: ${({ activeStep }) => registerPageFormStep(activeStep)};
+  transform: ${({ $activestep }) => registerPageFormStep($activestep)};
   transition: transform 500ms;
 `;
 
@@ -184,10 +184,10 @@ const Register = () => {
           </DescrıptıonLabel>
         </TopTextContainer>
         <ProgressBarContainer>
-          <ProgressBarLabel activeStep={activeStep}>{label}</ProgressBarLabel>
+          <ProgressBarLabel $activestep={activeStep}>{label}</ProgressBarLabel>
         </ProgressBarContainer>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <InputContainer activeStep={activeStep}>
+          <InputContainer $activestep={activeStep}>
             <PersonalInformationTab>
               <Input
                 register={register}
