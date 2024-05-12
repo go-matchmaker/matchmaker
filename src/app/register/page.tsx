@@ -21,6 +21,7 @@ const Container = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 `;
 
 const CenterContainer = styled.div`
@@ -30,6 +31,7 @@ const CenterContainer = styled.div`
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0px 0px 20px ${(props) => props.theme.colors.mainGrey};
+  overflow-y: auto;
   transition: height 1s, width 1s;
 
   ${(props) => props.theme.breakpoints.laptopL} {
@@ -57,6 +59,21 @@ const ProgressBarContainer = styled.div`
   border-radius: 2em;
   user-select: none;
   margin: 24px 0px;
+  transition: height 500ms, margin 500ms;
+
+  ${(props) => props.theme.breakpoints.laptopL} {
+    margin: 20px 0px;
+  }
+  ${(props) => props.theme.breakpoints.laptop} {
+    height: 40px;
+    margin: 18px 0px;
+  }
+  ${(props) => props.theme.breakpoints.tablet} {
+    margin: 16px 0px;
+  }
+  ${(props) => props.theme.breakpoints.mobile} {
+    margin: 10px 0px;
+  }
 `;
 
 const ProgressBarLabel = styled.label<{ $activestep: RegisterSteps }>`
@@ -70,20 +87,21 @@ const ProgressBarLabel = styled.label<{ $activestep: RegisterSteps }>`
   letter-spacing: 1px;
   background-color: ${(props) => props.theme.colors.mainGreen};
   border-radius: 2em;
-  padding: 0em 2em;
-  transition: width 1s;
   color: white;
-  font-size: 0.8vw;
+  font-size: ${(props) => props.theme.fontSizes.default};
   transition: font-size 500ms, width 500ms;
 
   ${(props) => props.theme.breakpoints.laptopL} {
-    font-size: 0.9vw;
+    font-size: ${(props) => props.theme.fontSizes.laptopL};
   }
   ${(props) => props.theme.breakpoints.laptop} {
-    font-size: 1.3vw;
+    font-size: ${(props) => props.theme.fontSizes.laptop};
   }
   ${(props) => props.theme.breakpoints.tablet} {
-    font-size: 1.8vw;
+    font-size: ${(props) => props.theme.fontSizes.tablet};
+  }
+  ${(props) => props.theme.breakpoints.mobile} {
+    font-size: ${(props) => props.theme.fontSizes.mobile};
   }
 `;
 
@@ -132,19 +150,61 @@ const TopTextContainer = styled.div`
 `;
 
 const RegısterLabel = styled.label`
-  font-size: 2vw;
+  font-size: ${(props) => props.theme.headerFontSizes.default};
   font-weight: bold;
   letter-spacing: 8px;
+  transition: font-size 500ms;
+
+  ${(props) => props.theme.breakpoints.laptopL} {
+    font-size: ${(props) => props.theme.headerFontSizes.laptopL};
+  }
+  ${(props) => props.theme.breakpoints.laptop} {
+    font-size: ${(props) => props.theme.headerFontSizes.laptop};
+  }
+  ${(props) => props.theme.breakpoints.tablet} {
+    font-size: ${(props) => props.theme.headerFontSizes.tablet};
+  }
+  ${(props) => props.theme.breakpoints.mobile} {
+    font-size: ${(props) => props.theme.headerFontSizes.mobile};
+  }
 `;
 const WelcomeLabel = styled.label`
-  font-size: 1.5vw;
+  font-size: ${(props) => props.theme.subFontSizes.default};
   font-weight: 500;
   letter-spacing: 4px;
+  transition: font-size 500ms;
+
+  ${(props) => props.theme.breakpoints.laptopL} {
+    font-size: ${(props) => props.theme.subFontSizes.laptopL};
+  }
+  ${(props) => props.theme.breakpoints.laptop} {
+    font-size: ${(props) => props.theme.subFontSizes.laptop};
+  }
+  ${(props) => props.theme.breakpoints.tablet} {
+    font-size: ${(props) => props.theme.subFontSizes.tablet};
+  }
+  ${(props) => props.theme.breakpoints.mobile} {
+    font-size: ${(props) => props.theme.subFontSizes.mobile};
+  }
 `;
 const DescrıptıonLabel = styled.label`
-  font-size: 1vw;
+  font-size: ${(props) => props.theme.fontSizes.default};
   font-weight: 500;
   letter-spacing: 1px;
+  transition: font-size 500ms;
+
+  ${(props) => props.theme.breakpoints.laptopL} {
+    font-size: ${(props) => props.theme.fontSizes.laptopL};
+  }
+  ${(props) => props.theme.breakpoints.laptop} {
+    font-size: ${(props) => props.theme.fontSizes.laptop};
+  }
+  ${(props) => props.theme.breakpoints.tablet} {
+    font-size: ${(props) => props.theme.fontSizes.tablet};
+  }
+  ${(props) => props.theme.breakpoints.mobile} {
+    font-size: ${(props) => props.theme.fontSizes.mobile};
+  }
 `;
 
 const Register = () => {

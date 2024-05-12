@@ -15,5 +15,26 @@ declare module "styled-components" {
       laptop: string;
       laptopL: string;
     };
+    headerFontSizes: {
+      default: string;
+      laptopL: string;
+      laptop: string;
+      tablet: string;
+      mobile: string;
+    };
+    subFontSizes: {
+      default: string;
+      laptopL: string;
+      laptop: string;
+      tablet: string;
+      mobile: string;
+    };
+    fontSizes: {
+      default: string;
+      laptopL: string;
+      laptop: string;
+      tablet: string;
+      mobile: string;
+    };
   }
 }
